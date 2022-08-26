@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('envelopes', function (Blueprint $table) {
+            $table->id();
+
+            # The ID returned from DocuSign
+            $table->string('envelope_id')->nullable();
+            # The uploaded document's file name
+            $table->string('original_filename');
+            # The uploaded document's file extension
+            $table->string('extension');
+            # The storage path to the saved document
+            $table->string('path');
+            # The saved document's hashed file name
+            $table->string('name');
+            # The email request's subject
+            $table->string('subject');
+            # The envelope's current status
+            $table->string('status')->default('created');
+
+            $table->timestamps();
+        });
+    }
+};

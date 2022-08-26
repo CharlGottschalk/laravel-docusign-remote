@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('envelope_recipients', function (Blueprint $table) {
+            $table->id();
+
+            # Each recipient belongs to an envelope
+            $table->foreignIdFor(\App\Models\Envelope::class);
+
+            # Recipient's full name
+            $table->string('name');
+            # Recipient's email address
+            $table->string('email');
+            # The order in which to request signatures - lowest is first
+            $table->integer('order')->default(1);
+            # Indicate whether this recipient is the carbon copy
+            $table->boolean('is_cc')->default(false);
+            # The current status of the recipient's signature
+            $table->string('status')->default('pending');
+
+            $table->timestamps();
+        });
+    }
+};
